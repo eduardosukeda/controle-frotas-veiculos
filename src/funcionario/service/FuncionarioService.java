@@ -36,7 +36,7 @@ public class FuncionarioService {
                 }
             });
 
-            System.out.println("-- Funcionarios Administrativos --");
+            System.out.println("\n-- Funcionarios Administrativos --");
             for (FuncionarioAdministrativo funcionarioAdministrativo : funcionarioAdministrativoList) {
                 System.out.println("\nNome: " + funcionarioAdministrativo.getNome());
                 System.out.println("Data de Nascimento: " + funcionarioAdministrativo.getDataNascimento());
@@ -56,7 +56,7 @@ public class FuncionarioService {
                 }
             });
 
-            System.out.println("-- Funcionarios Manobristas --");
+            System.out.println("\n-- Funcionarios Manobristas --");
             for (FuncionarioManobrista funcionarioManobrista : funcionarioManobristaList) {
                 System.out.println("\nNome: " + funcionarioManobrista.getNome());
                 System.out.println("Data de Nascimento: " + funcionarioManobrista.getDataNascimento());
@@ -79,7 +79,7 @@ public class FuncionarioService {
                 }
             });
 
-            System.out.println("-- Funcionarios Motoristas --");
+            System.out.println("\n-- Funcionarios Motoristas --");
             for (FuncionarioMotorista funcionarioMotorista : funcionarioMotoristaList) {
                 System.out.println("\nNome: " + funcionarioMotorista.getNome());
                 System.out.println("Data de Nascimento: " + funcionarioMotorista.getDataNascimento());
@@ -93,14 +93,10 @@ public class FuncionarioService {
         }
     }
 
-    public void buscarFuncionarioByCpf(List<FuncionarioAdministrativo> funcionarioAdministrativoList, List<FuncionarioManobrista> funcionarioManobristaList, List<FuncionarioMotorista> funcionarioMotoristaList, String cpf) {
-        List<FuncionarioAdministrativo> funcionarioAdministrativoListReturn = new ArrayList<>();
-        List<FuncionarioManobrista> funcionarioManobristaListReturn = new ArrayList<>();
-        List<FuncionarioMotorista> funcionarioMotoristaListReturn = new ArrayList<>();
-
+    public void buscarFuncionarioPorCpf(List<FuncionarioAdministrativo> funcionarioAdministrativoList, List<FuncionarioManobrista> funcionarioManobristaList, List<FuncionarioMotorista> funcionarioMotoristaList, String cpf) {
         System.out.println("\n-- Busca Funcionário por CPF --");
 
-        if (funcionarioAdministrativoList != null) {
+        if (funcionarioAdministrativoList != null && funcionarioAdministrativoList.size() > 0) {
             for (FuncionarioAdministrativo funcionarioAdministrativo : funcionarioAdministrativoList) {
                 if (funcionarioAdministrativo.getCpf().equals(cpf)) {
                     System.out.println("\nNome: " + funcionarioAdministrativo.getNome());
@@ -110,7 +106,7 @@ public class FuncionarioService {
             }
         }
 
-        if (funcionarioManobristaList != null) {
+        if (funcionarioManobristaList != null && funcionarioManobristaList.size() > 0) {
             for (FuncionarioManobrista funcionarioManobrista : funcionarioManobristaList) {
                 if (funcionarioManobrista.getCpf().equals(cpf)) {
                     System.out.println("\nNome: " + funcionarioManobrista.getNome());
@@ -123,7 +119,7 @@ public class FuncionarioService {
             }
         }
 
-        if (funcionarioMotoristaList != null) {
+        if (funcionarioMotoristaList != null && funcionarioMotoristaList.size() > 0) {
             for (FuncionarioMotorista funcionarioMotorista : funcionarioMotoristaList) {
                 if (funcionarioMotorista.getCpf().equals(cpf)) {
                     System.out.println("\nNome: " + funcionarioMotorista.getNome());
@@ -137,5 +133,34 @@ public class FuncionarioService {
                 }
             }
         }
+    }
+
+    public boolean cpfFuncionarioCadastrado(List<FuncionarioAdministrativo> funcionarioAdministrativoList, List<FuncionarioManobrista> funcionarioManobristaList, List<FuncionarioMotorista> funcionarioMotoristaList, String cpf) {
+
+        if (funcionarioAdministrativoList != null && funcionarioAdministrativoList.size() > 0) {
+            for (FuncionarioAdministrativo funcionarioAdministrativo : funcionarioAdministrativoList) {
+                if (funcionarioAdministrativo.getCpf().equals(cpf)) {
+                    return true;
+                }
+            }
+        }
+
+        if (funcionarioManobristaList != null && funcionarioManobristaList.size() > 0) {
+            for (FuncionarioManobrista funcionarioManobrista : funcionarioManobristaList) {
+                if (funcionarioManobrista.getCpf().equals(cpf)) {
+                    return true;
+                }
+            }
+        }
+
+        if (funcionarioMotoristaList != null && funcionarioMotoristaList.size() > 0) {
+            for (FuncionarioMotorista funcionarioMotorista : funcionarioMotoristaList) {
+                if (funcionarioMotorista.getCpf().equals(cpf)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

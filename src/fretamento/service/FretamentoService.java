@@ -1,4 +1,4 @@
 package fretamento.service;
 
-public interface FretamentoService {
+public class FretamentoService {
 }

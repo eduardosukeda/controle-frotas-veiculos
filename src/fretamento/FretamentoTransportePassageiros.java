@@ -3,22 +3,22 @@ package fretamento;
 import funcionario.FuncionarioMotorista;
 import veiculo.VeiculoTransportePassageiros;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class FretamentoTransportePassageiros {
 
     private int id;
     private VeiculoTransportePassageiros veiculoTransportePassageiros;
     private FuncionarioMotorista funcionarioMotorista;
-    private Date dataInicio;
-    private Date dataTermino;
+    private LocalDate dataInicio;
+    private LocalDate dataTermino;
     private double distanciaPercorridaKM;
     private double valorCobrado;
 
     public FretamentoTransportePassageiros() {
     }
 
-    public FretamentoTransportePassageiros(int id, VeiculoTransportePassageiros veiculoTransportePassageiros, FuncionarioMotorista funcionarioMotorista, Date dataInicio, Date dataTermino, double distanciaPercorridaKM, double valorCobrado) {
+    public FretamentoTransportePassageiros(int id, VeiculoTransportePassageiros veiculoTransportePassageiros, FuncionarioMotorista funcionarioMotorista, LocalDate dataInicio, LocalDate dataTermino, double distanciaPercorridaKM, double valorCobrado) {
         this.id = id;
         this.veiculoTransportePassageiros = veiculoTransportePassageiros;
         this.funcionarioMotorista = funcionarioMotorista;
@@ -52,19 +52,19 @@ public class FretamentoTransportePassageiros {
         this.funcionarioMotorista = funcionarioMotorista;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataTermino() {
+    public LocalDate getDataTermino() {
         return dataTermino;
     }
 
-    public void setDataTermino(Date dataTermino) {
+    public void setDataTermino(LocalDate dataTermino) {
         this.dataTermino = dataTermino;
     }
 
@@ -82,5 +82,18 @@ public class FretamentoTransportePassageiros {
 
     public void setValorCobrado(double valorCobrado) {
         this.valorCobrado = valorCobrado;
+    }
+
+    @Override
+    public String toString() {
+        return "FretamentoTransportePassageiros{" +
+                "id=" + id +
+                ", veiculoTransportePassageiros=" + veiculoTransportePassageiros +
+                ", funcionarioMotorista=" + funcionarioMotorista +
+                ", dataInicio=" + dataInicio +
+                ", dataTermino=" + dataTermino +
+                ", distanciaPercorridaKM=" + distanciaPercorridaKM +
+                ", valorCobrado=" + valorCobrado +
+                '}';
     }
 }

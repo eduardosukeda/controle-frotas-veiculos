@@ -158,4 +158,57 @@ public class VeiculoService {
 
         return false;
     }
+
+    public boolean placaVeiculoTransporteCargaCadastrada(List<VeiculoTransporteCargas> veiculoTransporteCargasList, String placa) {
+
+
+        if (veiculoTransporteCargasList != null && veiculoTransporteCargasList.size() > 0) {
+            for (VeiculoTransporteCargas veiculoTransporteCargas : veiculoTransporteCargasList) {
+                if (veiculoTransporteCargas.getPlaca().equals(placa)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean placaVeiculoTransportePassageiroCadastrada(List<VeiculoTransportePassageiros> veiculoTransportePassageirosList, String placa) {
+
+        if (veiculoTransportePassageirosList != null && veiculoTransportePassageirosList.size() > 0) {
+            for (VeiculoTransportePassageiros veiculoTransportePassageiros : veiculoTransportePassageirosList) {
+                if (veiculoTransportePassageiros.getPlaca().equals(placa)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public VeiculoTransportePassageiros buscaVeiculoTransportePassageirosPorPlaca(List<VeiculoTransportePassageiros> veiculoTransportePassageirosList, String placa) {
+
+        if (veiculoTransportePassageirosList != null && veiculoTransportePassageirosList.size() > 0) {
+            for (VeiculoTransportePassageiros veiculoTransportePassageiros : veiculoTransportePassageirosList) {
+                if (veiculoTransportePassageiros.getPlaca().equals(placa)) {
+                    return veiculoTransportePassageiros;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public VeiculoTransporteCargas buscaVeiculoTransporteCargasPorPlaca(List<VeiculoTransporteCargas> veiculoTransporteCargasList, String placa) {
+
+        if (veiculoTransporteCargasList != null && veiculoTransporteCargasList.size() > 0) {
+            for (VeiculoTransporteCargas veiculoTransporteCargas : veiculoTransporteCargasList) {
+                if (veiculoTransporteCargas.getPlaca().equals(placa)) {
+                    return veiculoTransporteCargas;
+                }
+            }
+        }
+
+        return null;
+    }
 }

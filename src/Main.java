@@ -1,3 +1,6 @@
+import fretamento.FretamentoTransporteCargas;
+import fretamento.FretamentoTransportePassageiros;
+import fretamento.service.FretamentoService;
 import funcionario.FuncionarioAdministrativo;
 import funcionario.FuncionarioManobrista;
 import funcionario.FuncionarioMotorista;
@@ -18,43 +21,19 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static FuncionarioService funcionarioService = new FuncionarioService();
     private static VeiculoService veiculoService = new VeiculoService();
+    private static FretamentoService fretamentoService = new FretamentoService();
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-    static List<FuncionarioAdministrativo> funcionarioAdministrativoList = new ArrayList<>();
-    static List<FuncionarioManobrista> funcionarioManobristaList = new ArrayList<>();
-    static List<FuncionarioMotorista> funcionarioMotoristaList = new ArrayList<>();
-    static List<VeiculoPasseio> veiculoPasseioList = new ArrayList<>();
-    static List<VeiculoTransporteCargas> veiculoTransporteCargasList = new ArrayList<>();
-    static List<VeiculoTransportePassageiros> veiculoTransportePassageirosList = new ArrayList<>();
+    private static List<FuncionarioAdministrativo> funcionarioAdministrativoList = new ArrayList<>();
+    private static List<FuncionarioManobrista> funcionarioManobristaList = new ArrayList<>();
+    private static List<FuncionarioMotorista> funcionarioMotoristaList = new ArrayList<>();
+    private static List<VeiculoPasseio> veiculoPasseioList = new ArrayList<>();
+    private static List<VeiculoTransporteCargas> veiculoTransporteCargasList = new ArrayList<>();
+    private static List<VeiculoTransportePassageiros> veiculoTransportePassageirosList = new ArrayList<>();
+    private static List<FretamentoTransportePassageiros> fretamentoTransportePassageirosList = new ArrayList<>();
+    private static List<FretamentoTransporteCargas> fretamentoTransporteCargasList = new ArrayList<>();
 
     public static void main(String[] args) {
-
         MenuPrincipal();
-//
-//        VeiculoService veiculoService = new VeiculoService();
-//        List<VeiculoPasseio> veiculoPasseioList = new ArrayList<>();
-//        veiculoPasseioList.add(new VeiculoPasseio("asdasd", "asdasd", 2020, 18.2));
-//        veiculoPasseioList.add(new VeiculoPasseio("asdasd", "asdasd", 2021, 18.2));
-//        veiculoPasseioList.add(new VeiculoPasseio("asdasd", "asdasd", 2000, 18.2));
-//        veiculoPasseioList.add(new VeiculoPasseio("asdasd", "asdasd", 2019, 18.2));
-//        veiculoPasseioList.add(new VeiculoPasseio("asdasd", "asdasd", 2015, 18.2));
-//        veiculoPasseioList.add(new VeiculoPasseio("asdasd", "asdasd", 2008, 18.2));
-//
-//        List<VeiculoTransporteCargas> veiculoTransporteCargasList = new ArrayList<>();
-//        veiculoTransporteCargasList.add(new VeiculoTransporteCargas("asdasd", "asdasd", 2008, 18.2, 15.2, 4, true));
-//        veiculoTransporteCargasList.add(new VeiculoTransporteCargas("asdasd", "asdasd", 2001, 18.2, 15.2, 4, true));
-//        veiculoTransporteCargasList.add(new VeiculoTransporteCargas("asdasd", "asdasd", 2000, 18.2, 15.2, 4, true));
-//        veiculoTransporteCargasList.add(new VeiculoTransporteCargas("asdasd", "asdasd", 2015, 18.2, 15.2, 4, true));
-//
-//        List<VeiculoTransportePassageiros> veiculoTransportePassageirosList = new ArrayList<>();
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2011, 18.2, 46));
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2008, 18.2, 46));
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2015, 18.2, 46));
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2008, 18.2, 46));
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2007, 18.2, 46));
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2008, 18.2, 46));
-//        veiculoTransportePassageirosList.add(new VeiculoTransportePassageiros("asdasd", "asdasd", 2008, 18.2, 46));
-//
-//        veiculoService.buscarVeiculosOrdemFabricacao(veiculoPasseioList, veiculoTransporteCargasList, veiculoTransportePassageirosList);
     }
 
     public static void MenuPrincipal() {
@@ -74,6 +53,7 @@ public class Main {
                     MenuVeiculos();
                     break;
                 case 3:
+                    MenuFretamento();
                     break;
             }
         } while (select != 4);
@@ -111,7 +91,6 @@ public class Main {
                             cpf = scanner.nextLine();
 
                             if (!funcionarioService.cpfFuncionarioCadastrado(funcionarioAdministrativoList, funcionarioManobristaList, funcionarioMotoristaList, cpf)) {
-
                                 funcionarioAdministrativoList.add(funcionarioService.cadastrarFuncionarioAdministrativo(nome, dataNascimento, cpf));
                             } else {
                                 System.out.println("CPF já cadastrado, por gentileza informe outro CPF !");
@@ -134,13 +113,17 @@ public class Main {
                                 System.out.printf("Número CNH:\n");
                                 numeroCNH = scanner.nextLine();
 
-                                System.out.printf("Categoria CNH:\n");
+                                System.out.printf("Categoria CNH (B, C, D ou E):\n");
                                 categoriaCNH = scanner.nextLine();
 
-                                System.out.printf("Data de Vencimento CNH:\n");
-                                dataVencimentoCNH = LocalDate.parse(scanner.nextLine(), formatter);
+                                if (funcionarioService.validaCategoriaCNH(categoriaCNH)) {
+                                    System.out.printf("Data de Vencimento CNH (ex: 02/12/2020):\n");
+                                    dataVencimentoCNH = LocalDate.parse(scanner.nextLine(), formatter);
 
-                                funcionarioManobristaList.add(funcionarioService.cadastrarFuncionarioManobrista(nome, dataNascimento, cpf, numeroCNH, categoriaCNH, dataVencimentoCNH));
+                                    funcionarioManobristaList.add(funcionarioService.cadastrarFuncionarioManobrista(nome, dataNascimento, cpf, numeroCNH, categoriaCNH, dataVencimentoCNH));
+                                } else {
+                                    System.out.println("Categoria CNH Inválida, por gentileza informe uma categoria válida (B, C, D ou E)");
+                                }
                             } else {
                                 System.out.println("CPF já cadastrado, por gentileza informe outro CPF !");
                             }
@@ -162,19 +145,24 @@ public class Main {
                                 System.out.printf("Número CNH:\n");
                                 numeroCNH = scanner.nextLine();
 
-                                System.out.printf("Categoria CNH:\n");
+                                System.out.printf("Categoria CNH (B, C, D ou E):\n");
                                 categoriaCNH = scanner.nextLine();
 
-                                System.out.printf("Data de Vencimento CNH (ex: 02/12/2020):\n");
-                                dataVencimentoCNH = LocalDate.parse(scanner.nextLine(), formatter);
+                                if (funcionarioService.validaCategoriaCNH(categoriaCNH)) {
 
-                                System.out.printf("Possui curso para cargas perigosas? (S-Sim/N-Não):\n");
-                                cursoCargasPerigosas = scanner.nextLine().equals("S") ? true : false;
+                                    System.out.printf("Data de Vencimento CNH (ex: 02/12/2020):\n");
+                                    dataVencimentoCNH = LocalDate.parse(scanner.nextLine(), formatter);
 
-                                System.out.printf("Possui curso para transporte de passageiros? (S-Sim/N-Não):\n");
-                                cursoTransportePassageiros = scanner.nextLine().equals("S") ? true : false;
+                                    System.out.printf("Possui curso para cargas perigosas? (S-Sim/N-Não):\n");
+                                    cursoCargasPerigosas = scanner.nextLine().equals("S") ? true : false;
 
-                                funcionarioMotoristaList.add(funcionarioService.cadastrarFuncionarioMotorista(nome, dataNascimento, cpf, numeroCNH, categoriaCNH, dataVencimentoCNH, cursoCargasPerigosas, cursoTransportePassageiros));
+                                    System.out.printf("Possui curso para transporte de passageiros? (S-Sim/N-Não):\n");
+                                    cursoTransportePassageiros = scanner.nextLine().equals("S") ? true : false;
+
+                                    funcionarioMotoristaList.add(funcionarioService.cadastrarFuncionarioMotorista(nome, dataNascimento, cpf, numeroCNH, categoriaCNH, dataVencimentoCNH, cursoCargasPerigosas, cursoTransportePassageiros));
+                                } else {
+                                    System.out.println("Categoria CNH Inválida, por gentileza informe uma categoria válida (B, C, D ou E)");
+                                }
                             } else {
                                 System.out.println("CPF já cadastrado, por gentileza informe outro CPF !");
                             }
@@ -317,5 +305,124 @@ public class Main {
                     break;
             }
         } while (select != 4);
+    }
+
+    public static void MenuFretamento() {
+        int select;
+        String cpf, placa;
+        LocalDate dataInicio, dataTermino;
+        double distanciaPercorridaKM;
+        boolean cargaPerigosa;
+        boolean ok = true;
+
+        do {
+            do {
+                System.out.printf("\nMenu Fretamento\nDeseja:\n 1. Cadastrar Fretamento de veículo\n 2. Listar motoristas livres\n 3. Listar veículos livres \n 4. Listar histórico de fretamentos \n 5. Listar top 5 veículos mais lucrativos\n\n 6. Sair\n");
+                ok = true;
+                select = scanner.nextInt();
+                scanner.nextLine();
+            } while (select < 1 || select > 6);
+
+            switch (select) {
+                case 1:
+                    System.out.printf("\nQual o tipo de Fretamento que você deseja cadastrar ?\n 1. Fretamento para Veículos de Passageiros\n 2. Fretamento para Veículos de Cargas\n\n 3. Sair\n");
+                    select = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (select) {
+                        case 1:
+                            System.out.printf("CPF do condutor do veículo:\n");
+                            cpf = scanner.nextLine();
+
+                            if (funcionarioService.cpfFuncionariMotoristaCadastrado(funcionarioMotoristaList, cpf)) {
+
+                                FuncionarioMotorista funcionarioMotorista = funcionarioService.buscaFuncionarioMotoristaPorCPF(funcionarioMotoristaList, cpf);
+
+                                System.out.printf("Placa do veículo:\n");
+                                placa = scanner.nextLine();
+                                if (veiculoService.placaVeiculoTransportePassageiroCadastrada(veiculoTransportePassageirosList, placa)) {
+
+                                    VeiculoTransportePassageiros veiculoTransportePassageiros = veiculoService.buscaVeiculoTransportePassageirosPorPlaca(veiculoTransportePassageirosList, placa);
+
+                                    if (fretamentoService.validaFuncionarioMotoristaParaVeiculoTransportePassageiros(funcionarioMotorista, veiculoTransportePassageiros)) {
+                                        System.out.printf("Data Inicio do Fretamento (ex: 02/12/2020):\n");
+                                        dataInicio = LocalDate.parse(scanner.nextLine(), formatter);
+
+                                        System.out.printf("Data Término do Fretamento (ex: 02/12/2020):\n");
+                                        dataTermino = LocalDate.parse(scanner.nextLine(), formatter);
+
+                                        System.out.printf("Distância percorrida em Quilômetros:\n");
+                                        distanciaPercorridaKM = scanner.nextDouble();
+
+                                        fretamentoTransportePassageirosList.add(fretamentoService.cadastrarFretamentoTransportePassageiros(fretamentoTransportePassageirosList, funcionarioMotoristaList, veiculoTransportePassageirosList, cpf, placa, dataInicio, dataTermino, distanciaPercorridaKM));
+                                    } else {
+                                        System.out.println("Motorista não está elegível para realizar este fretamento, pois sua categoria é " + funcionarioMotorista.getCategoriaCNH() + " onde difere da lei para este tipo veículo ou não realizou o curso de transporte de passageiro !");
+                                    }
+                                } else {
+                                    System.out.println("Veículo não cadastrado, por gentileza cadastre o Veículo !");
+                                }
+                            } else {
+                                System.out.println("CPF não cadastrado, por gentileza cadastre o Funcionário !");
+                            }
+
+
+                            ok = false;
+                            break;
+
+                        case 2:
+                            System.out.printf("CPF do condutor do veículo:\n");
+                            cpf = scanner.nextLine();
+
+                            if (funcionarioService.cpfFuncionariMotoristaCadastrado(funcionarioMotoristaList, cpf)) {
+
+                                FuncionarioMotorista funcionarioMotorista = funcionarioService.buscaFuncionarioMotoristaPorCPF(funcionarioMotoristaList, cpf);
+
+                                System.out.printf("Placa do veículo:\n");
+                                placa = scanner.nextLine();
+
+                                if (veiculoService.placaVeiculoTransporteCargaCadastrada(veiculoTransporteCargasList, placa)) {
+
+                                    VeiculoTransporteCargas veiculoTransporteCargas = veiculoService.buscaVeiculoTransporteCargasPorPlaca(veiculoTransporteCargasList, placa);
+
+                                    if (fretamentoService.validaFuncionarioMotoristaParaVeiculoTransporteCarga(funcionarioMotorista, veiculoTransporteCargas)) {
+                                        System.out.printf("Data Inicio do Fretamento (ex: 02/12/2020):\n");
+                                        dataInicio = LocalDate.parse(scanner.nextLine(), formatter);
+
+                                        System.out.printf("Data Término do Fretamento (ex: 02/12/2020):\n");
+                                        dataTermino = LocalDate.parse(scanner.nextLine(), formatter);
+
+                                        System.out.printf("Distância percorrida em Quilômetros:\n");
+                                        distanciaPercorridaKM = scanner.nextDouble();
+
+                                        scanner.nextLine();
+
+                                        System.out.printf("Carga Perigosa? (S-Sim/N-Não):\n");
+                                        cargaPerigosa = scanner.nextLine().equals("S") ? true : false;
+
+                                        fretamentoTransporteCargasList.add(fretamentoService.cadastrarFretamentoTransporteCargas(fretamentoTransporteCargasList, funcionarioMotoristaList, veiculoTransporteCargasList, cpf, placa, dataInicio, dataTermino, cargaPerigosa, distanciaPercorridaKM));
+                                    } else {
+                                        System.out.println("Motorista não está elegível para realizar este fretamento, pois sua categoria é " + funcionarioMotorista.getCategoriaCNH() + " onde difere da lei para este tipo veículo ou não realizou o curso de transporte de carga");
+                                    }
+                                } else {
+                                    System.out.println("Veículo não cadastrado, por gentileza cadastre o Veículo !");
+                                }
+                            } else {
+                                System.out.println("CPF não cadastrado, por gentileza cadastre o Funcionário !");
+                            }
+
+                            ok = false;
+                            break;
+                    }
+                    while (ok == true && select != 3) ;
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+        } while (select != 6);
     }
 }

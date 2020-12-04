@@ -163,4 +163,38 @@ public class FuncionarioService {
 
         return false;
     }
+
+    public boolean cpfFuncionariMotoristaCadastrado(List<FuncionarioMotorista> funcionarioMotoristaList, String cpf) {
+
+        if (funcionarioMotoristaList != null && funcionarioMotoristaList.size() > 0) {
+            for (FuncionarioMotorista funcionarioMotorista : funcionarioMotoristaList) {
+                if (funcionarioMotorista.getCpf().equals(cpf)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public FuncionarioMotorista buscaFuncionarioMotoristaPorCPF(List<FuncionarioMotorista> funcionarioMotoristaList, String cpf) {
+
+        if (funcionarioMotoristaList != null && funcionarioMotoristaList.size() > 0) {
+            for (FuncionarioMotorista funcionarioMotorista : funcionarioMotoristaList) {
+                if (funcionarioMotorista.getCpf().equals(cpf)) {
+                    return funcionarioMotorista;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean validaCategoriaCNH(String categoriaCNH) {
+
+        if (categoriaCNH.equals("B") || categoriaCNH.equals("C") || categoriaCNH.equals("D") || categoriaCNH.equals("E")) {
+            return true;
+        }
+        return false;
+    }
 }

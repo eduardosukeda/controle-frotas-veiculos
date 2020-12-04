@@ -169,13 +169,15 @@ public class FretamentoService {
             });
 
             for (int i = 0; i <= 4; i++) {
-                System.out.println("\nId: " + fretamentoTransportePassageirosList.get(i).getId());
-                System.out.println("Placa Veículo de Transporte de Passageiros: " + fretamentoTransportePassageirosList.get(i).getVeiculoTransportePassageiros().getPlaca());
-                System.out.println("CPF Funcionário Motorista: " + fretamentoTransportePassageirosList.get(i).getFuncionarioMotorista().getCpf());
-                System.out.println("Data Inicio: " + fretamentoTransportePassageirosList.get(i).getDataInicio());
-                System.out.println("Data Término: " + fretamentoTransportePassageirosList.get(i).getDataTermino());
-                System.out.println("Distância Percorrida em KM: " + fretamentoTransportePassageirosList.get(i).getDistanciaPercorridaKM());
-                System.out.println("Valor Cobrado: " + fretamentoTransportePassageirosList.get(i).getValorCobrado());
+                if (fretamentoTransporteCargasList.get(i) != null) {
+                    System.out.println("\nId: " + fretamentoTransportePassageirosList.get(i).getId());
+                    System.out.println("Placa Veículo de Transporte de Passageiros: " + fretamentoTransportePassageirosList.get(i).getVeiculoTransportePassageiros().getPlaca());
+                    System.out.println("CPF Funcionário Motorista: " + fretamentoTransportePassageirosList.get(i).getFuncionarioMotorista().getCpf());
+                    System.out.println("Data Inicio: " + fretamentoTransportePassageirosList.get(i).getDataInicio());
+                    System.out.println("Data Término: " + fretamentoTransportePassageirosList.get(i).getDataTermino());
+                    System.out.println("Distância Percorrida em KM: " + fretamentoTransportePassageirosList.get(i).getDistanciaPercorridaKM());
+                    System.out.println("Valor Cobrado: " + fretamentoTransportePassageirosList.get(i).getValorCobrado());
+                }
             }
         }
 

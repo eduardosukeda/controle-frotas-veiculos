@@ -4,7 +4,6 @@ import funcionario.FuncionarioMotorista;
 import veiculo.VeiculoTransporteCargas;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class FretamentoTransporteCargas {
 

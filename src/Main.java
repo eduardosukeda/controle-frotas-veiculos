@@ -415,12 +415,17 @@ public class Main {
                     while (ok == true && select != 3) ;
                     break;
                 case 2:
+                    fretamentoService.listaMotoristasLivres(fretamentoTransportePassageirosList, fretamentoTransporteCargasList, funcionarioMotoristaList);
                     break;
                 case 3:
+                    fretamentoService.listaVeiculosLivres(fretamentoTransportePassageirosList, fretamentoTransporteCargasList, veiculoTransporteCargasList, veiculoTransportePassageirosList);
+                    ;
                     break;
                 case 4:
+                    fretamentoService.listaHistoricoFretamentos(fretamentoTransportePassageirosList, fretamentoTransporteCargasList);
                     break;
                 case 5:
+                    fretamentoService.listaTop5VeiculosMaisLucrativos(fretamentoTransportePassageirosList, fretamentoTransporteCargasList);
                     break;
             }
         } while (select != 6);
